@@ -39,35 +39,33 @@
         referrer = realURL;
     });
 
-    if (settings.track_post_creation) {
-        api.modifyClass('model:composer', {
-            createPost(opts) {
-                const result = this._super(opts);
-                if (result) {
-                    result.then((r) => {
-                        let json = r.responseJson;
-                        if (json && json.post && json.action === 'create_post') {
-                            let topicID = json.post.topic_id;
-                            let topicSlug = json.post.topic_slug;
-                            let postNumber = json.post.post_number;
-                            if (postNumber === 1) {
-                                analytics.track('Topic Created', {
-                                    topic_id: topicID,
-                                    topic_slug: topicSlug
-                                });
-                            } else {
-                                analytics.track('Post Created', {
-                                    topic_id: topicID,
-                                    topic_slug: topicSlug,
-                                    post_number: postNumber
-                                });
-                            }
+    api.modifyClass('model:composer', {
+        createPost(opts) {
+            const result = this._super(opts);
+            if (result) {
+                result.then((r) => {
+                    let json = r.responseJson;
+                    if (settings.track_post_creation && json && json.post && json.action === 'create_post') {
+                        let topicID = json.post.topic_id,
+                            topicSlug = json.post.topic_slug,
+                            postNumber = json.post.post_number;
+                        if (postNumber === 1) {
+                            analytics.track('Topic Created', {
+                                topic_id: topicID,
+                                topic_slug: topicSlug
+                            });
+                        } else {
+                            analytics.track('Post Created', {
+                                topic_id: topicID,
+                                topic_slug: topicSlug,
+                                post_number: postNumber
+                            });
                         }
-                    });
-                }
-
-                return result;
+                    }
+                });
             }
-        });
-    }
+
+            return result;
+        }
+    });
  </script>
