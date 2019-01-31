@@ -1,2 +1,10 @@
 segment_secret_key:
   default: ""
+track_users:
+  default: true
+track_by_external_id:
+  default: false
+track_page:
+  default: true
+track_post_creation:
+  default: false
