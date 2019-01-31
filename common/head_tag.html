@@ -15,15 +15,16 @@
         });
     }
 
-    // remove the title param for now
     api.onPageChange((url) => {
         let pageType;
         const realURL = window.location.href;
-        if (url.startsWith('/')) {
+        if (url.match(/^\/$/)) {
             pageType = "Homepage";
-        } else if (url.startsWith('/t')) {
+        } else if (url.startsWith('/tags/')) {
+            pageType = "Tags"
+        } else if (url.startsWith('/t/')) {
             pageType = "Topic";
-        } else if (url.startsWith('/c')) {
+        } else if (url.startsWith('/c/')) {
             pageType = "Category";
         }
 
