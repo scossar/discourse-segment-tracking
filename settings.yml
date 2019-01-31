@@ -1,6 +1,6 @@
 segment_write_key:
   default: ""
-  description: "The Write Key for your Segment Source (found at Sources / your-source / API Keys)"
+  description: "The Write Key for your Segment Source. Note: you must also copy the following URL to the 'content security policy script src' Site Setting. Replace the text &lt;write-key&gt; with your write key: https://cdn.segment.com/analytics.js/v1/&lt;write-key&gt;/analytics.min.js"
 track_users:
   default: true
   description: "Call the Segment identify function when a user logs in or refreshes the site."
